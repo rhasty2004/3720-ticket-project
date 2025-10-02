@@ -1,0 +1,19 @@
+{
+    "name": "admin-service",
+    "version": "1.0.0",
+    "description": "Admin microservice for creating and storing events (SQLite, MVC)",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js",
+      "dev": "nodemon index.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2",
+      "sqlite3": "^5.1.6",
+      "body-parser": "^1.20.2"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.22"
+    }
+  }
+  
