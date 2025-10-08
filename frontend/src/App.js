@@ -50,7 +50,7 @@ function App() {
 
 	return (
 		<div className="App" style={{ padding: 20 }}>
-			<h1>Clemson Campus Events</h1>
+			<h1>TigerTix</h1>
 			{message && (
 				<div style={{ marginBottom: 12, color: 'green' }}>{message}</div>
 			)}
