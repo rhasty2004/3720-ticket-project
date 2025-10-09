@@ -1,5 +1,11 @@
 const clientModel = require('../models/clientModel');
 
+/*
+  retrieve all events and return as JSON
+  req - express request object
+  res - express response object
+  returns JSON response containing events or error message
+*/
 async function getEvents(req, res) {
   try {
     const events = await clientModel.getAllEvents();
@@ -10,6 +16,12 @@ async function getEvents(req, res) {
   }
 }
 
+/*
+  purchase a ticket for a given event ID
+  req - express request object
+  res - express response object
+  returns JSON response with ticket purchase result or error message
+*/
 async function purchaseTicket(req, res) {
   const eventId = parseInt(req.params.id);
   if (isNaN(eventId)) return res.status(400).json({ error: 'Invalid event ID' });

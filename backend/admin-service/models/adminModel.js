@@ -1,5 +1,10 @@
 const dbModule = require('../setup');
 
+/*
+  Creates a new event in the database
+  name - name of the event. date - ISO string date. tickets - number of tickets available
+  returns a promise that resolves to the created event object
+*/ 
 function createEvent({ name, date, tickets }) {
   return new Promise((resolve, reject) => {
     const db = dbModule.openDb();

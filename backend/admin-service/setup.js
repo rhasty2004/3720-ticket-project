@@ -5,6 +5,10 @@ const path = require('path');
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'events.db');
 
+/* Ensure data directory exists and creates events
+    table if it doesn't exist
+    returns a promise that resolves when setup is complete
+*/
 function setup() {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });

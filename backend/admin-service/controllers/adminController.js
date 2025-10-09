@@ -1,5 +1,10 @@
 const adminModel = require('../models/adminModel');
 
+/*
+  validates the data for creating an event
+  body - the request body containing event details
+  returns null if event is valid or an error message if invalid
+*/
 function validateEvent(body) {
   if (!body) return 'Missing request body';
   const { name, date, tickets } = body;
@@ -9,6 +14,12 @@ function validateEvent(body) {
   return null;
 }
 
+/*
+  Creates a new event
+  req - request object containing event details in body
+  res - response object to send back result
+  returns 201 with event data if successful, 400 for validation errors, or 500 for server errors
+*/
 async function createEvent(req, res) {
   const error = validateEvent(req.body);
   if (error) return res.status(400).json({ error });

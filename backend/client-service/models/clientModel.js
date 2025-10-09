@@ -1,5 +1,8 @@
 const dbModule = require('../setup');
 
+/*
+  retrieve all events from the database
+*/
 function getAllEvents() {
   return new Promise((resolve, reject) => {
     const db = dbModule.openDb();
@@ -11,6 +14,11 @@ function getAllEvents() {
   });
 }
 
+/*
+  purchase a ticket for a given event ID
+  eventId - ID of the event to purchase a ticket for
+  returns a promise that resolves with updated event data or rejects with an error
+*/
 function purchaseTicket(eventId) {
   return new Promise((resolve, reject) => {
     const db = dbModule.openDb();
