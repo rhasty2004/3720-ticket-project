@@ -48,30 +48,62 @@ function App() {
 		}
 	}
 
-	return (
-		<div className="App" style={{ padding: 20 }}>
-			<h1>TigerTix</h1>
-			{message && (
-				<div style={{ marginBottom: 12, color: 'green' }}>{message}</div>
-			)}
-			<ul style={{ listStyle: 'none', padding: 0 }}>
-				{events.map(event => (
-					<li key={event.id} style={{ marginBottom: 12, borderBottom: '1px solid #eee', paddingBottom: 8 }}>
-						<div style={{ fontWeight: 600 }}>{event.name}</div>
-						<div style={{ color: '#555' }}>{new Date(event.date).toLocaleString()}</div>
-						<div>Tickets available: {event.tickets}</div>
-						<button
-							onClick={() => buyTicket(event.id)}
-							disabled={loadingMap[event.id] || event.tickets <= 0}
-							style={{ marginTop: 8 }}
+		return (
+			<div className="App" style={{ padding: 20 }}>
+				<header>
+					<h1>TigerTix</h1>
+				</header>
+				<main>
+					{/* Status region for screen readers */}
+					{message && (
+						<div
+							role="status"
+							aria-live="polite"
+							tabIndex={-1}
+							style={{ marginBottom: 12, color: 'green' }}
 						>
-							{loadingMap[event.id] ? 'Processing...' : event.tickets > 0 ? 'Buy Ticket' : 'Sold out'}
-						</button>
-					</li>
-				))}
-			</ul>
-		</div>
-	);
+							{message}
+						</div>
+					)}
+
+					<section aria-label="Events">
+						<ul style={{ listStyle: 'none', padding: 0 }} aria-live="polite">
+							{events.map(event => (
+								<li
+									key={event.id}
+									style={{ marginBottom: 12, borderBottom: '1px solid #eee', paddingBottom: 8 }}
+								>
+									<article aria-labelledby={`event-${event.id}`}>
+										<h2 id={`event-${event.id}`} style={{ fontWeight: 600, margin: 0 }}>{event.name}</h2>
+										<p style={{ color: '#555', margin: '4px 0' }}>
+											<time dateTime={event.date}>{new Date(event.date).toLocaleString()}</time>
+										</p>
+										<p id={`tickets-${event.id}`}>Tickets available: <strong>{event.tickets}</strong></p>
+
+										<button
+											onClick={() => buyTicket(event.id)}
+											disabled={loadingMap[event.id] || event.tickets <= 0}
+											aria-disabled={loadingMap[event.id] || event.tickets <= 0}
+											aria-label={
+												loadingMap[event.id]
+													? `Processing purchase for ${event.name}`
+													: event.tickets > 0
+														? `Buy ticket for ${event.name}. ${event.tickets} tickets available.`
+														: `Sold out for ${event.name}`
+											}
+											title={event.tickets > 0 ? `Buy ticket for ${event.name}` : `Sold out`}
+											style={{ marginTop: 8 }}
+										>
+											{loadingMap[event.id] ? 'Processing...' : event.tickets > 0 ? `Buy ticket for ${event.name}` : 'Sold out'}
+										</button>
+									</article>
+								</li>
+							))}
+						</ul>
+					</section>
+				</main>
+			</div>
+		);
 }
 
 export default App;

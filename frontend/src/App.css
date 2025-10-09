@@ -28,6 +28,26 @@
   color: #61dafb;
 }
 
+/* Visible focus styles for keyboard users */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 3px solid #2563eb; /* blue ring */
+  outline-offset: 2px;
+}
+
+/* Use :focus-visible where supported to avoid showing when clicking by mouse */
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button[disabled], button[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
