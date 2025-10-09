@@ -3,6 +3,11 @@ import './App.css';
 
 const BASE = process.env.REACT_APP_CLIENT_URL || 'http://localhost:5000';
 
+/*
+	Main app component for the frontend
+	Handles displaying events and purchasing tickets
+	also allows accessibility features
+*/
 function App() {
   const [events, setEvents] = useState([]);
   const [loadingMap, setLoadingMap] = useState({});
