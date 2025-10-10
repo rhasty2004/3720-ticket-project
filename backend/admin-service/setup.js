@@ -1,18 +1,12 @@
 const sqlite3 = require('sqlite3').verbose();
-const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, 'data');
-const DB_PATH = path.join(DATA_DIR, 'events.db');
+// Use the shared DB file so admin and client services operate on the same database
+const DB_PATH = path.join(__dirname, '..', 'shared-db', 'database.sqlite');
 
-/* Ensure data directory exists and creates events
-    table if it doesn't exist
-    returns a promise that resolves when setup is complete
-*/
+// Initialize the shared DB (creates file if missing) and create the events table if needed
 function setup() {
   return new Promise((resolve, reject) => {
-    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-
     const db = new sqlite3.Database(DB_PATH);
     const createTable = `
       CREATE TABLE IF NOT EXISTS events (
