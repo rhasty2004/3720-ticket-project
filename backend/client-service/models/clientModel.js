@@ -15,40 +15,86 @@ function getAllEvents() {
 }
 
 /*
-  purchase a ticket for a given event ID
+  purchase a ticket for a given event ID, deals with concurrency using retries
   eventId - ID of the event to purchase a ticket for
   returns a promise that resolves with updated event data or rejects with an error
 */
 function purchaseTicket(eventId) {
+  const maxAttempts = 5;
+  const baseDelay = 50; // ms
+
   return new Promise((resolve, reject) => {
-    const db = dbModule.openDb();
-    // Check current ticket count
-    db.get('SELECT * FROM events WHERE id = ?', [eventId], (err, row) => {
-      if (err) {
-        db.close();
-        return reject(err);
-      }
-      if (!row) {
-        db.close();
-        return reject(new Error('Event not found'));
-      }
-      if (row.tickets <= 0) {
-        db.close();
-        return reject(new Error('No tickets left'));
-      }
-      const newTickets = row.tickets - 1;
-      db.run('UPDATE events SET tickets = ? WHERE id = ?', [newTickets, eventId], function (err2) {
-        if (err2) {
-          db.close();
-          return reject(err2);
-        }
-        db.get('SELECT * FROM events WHERE id = ?', [eventId], (err3, updatedRow) => {
-          db.close();
-          if (err3) return reject(err3);
-          resolve(updatedRow);
+    let attempt = 0;
+
+    function tryOnce() {
+      attempt += 1;
+      const db = dbModule.openDb();
+
+      db.serialize(() => {
+        db.run('BEGIN IMMEDIATE', (beginErr) => {
+          if (beginErr) {
+            db.close();
+            // retry on SQLITE_BUSY
+            if (beginErr.code === 'SQLITE_BUSY' && attempt < maxAttempts) {
+              const delay = baseDelay * Math.pow(2, attempt - 1);
+              return setTimeout(tryOnce, delay);
+            }
+            return reject(beginErr);
+          }
+
+          db.run(
+            'UPDATE events SET tickets = tickets - 1 WHERE id = ? AND tickets > 0',
+            [eventId],
+            function (updateErr) {
+              if (updateErr) {
+                // rollback and possibly retry on busy
+                return db.run('ROLLBACK', () => {
+                  db.close();
+                  if (updateErr.code === 'SQLITE_BUSY' && attempt < maxAttempts) {
+                    const delay = baseDelay * Math.pow(2, attempt - 1);
+                    return setTimeout(tryOnce, delay);
+                  }
+                  return reject(updateErr);
+                });
+              }
+
+              if (this.changes === 0) {
+                // nothing updated. no tickets or not found
+                return db.run('ROLLBACK', () => {
+                  db.close();
+                  return resolve(null);
+                });
+              }
+
+              // read updated row
+              db.get('SELECT * FROM events WHERE id = ?', [eventId], (getErr, updatedRow) => {
+                if (getErr) {
+                  return db.run('ROLLBACK', () => {
+                    db.close();
+                    return reject(getErr);
+                  });
+                }
+
+                db.run('COMMIT', (commitErr) => {
+                  db.close();
+                  if (commitErr) {
+                    // If commit failed due to busy, optionally retry
+                    if (commitErr.code === 'SQLITE_BUSY' && attempt < maxAttempts) {
+                      const delay = baseDelay * Math.pow(2, attempt - 1);
+                      return setTimeout(tryOnce, delay);
+                    }
+                    return reject(commitErr);
+                  }
+                  return resolve(updatedRow);
+                });
+              });
+            }
+          );
         });
       });
-    });
+    }
+
+    tryOnce();
   });
 }
 
