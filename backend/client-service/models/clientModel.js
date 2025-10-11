@@ -16,6 +16,7 @@ function getAllEvents() {
 
 /*
   purchase a ticket for a given event ID, deals with concurrency using retries
+  makes sure it prevents race conditions
   eventId - ID of the event to purchase a ticket for
   returns a promise that resolves with updated event data or rejects with an error
 */
