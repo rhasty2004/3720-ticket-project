@@ -1,6 +1,6 @@
 const model = require('../models/llmModel');
 
-// Very small regex-based parser fallback. Returns { event, tickets, intent }
+// Very small parser fallback. Returns { event, tickets, intent }
 function simpleParse(text) {
   if (!text || typeof text !== 'string') return null;
   const lower = text.toLowerCase();

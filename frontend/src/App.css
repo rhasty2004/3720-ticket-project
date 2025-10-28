@@ -56,3 +56,29 @@ button[disabled], button[aria-disabled="true"] {
     transform: rotate(360deg);
   }
 }
+
+/* Chat window styles for voice assistant */
+.chat-window {
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+  background: #fafafa;
+  text-align: left;
+  min-height: 64px;
+}
+.chat-empty {
+  color: #666;
+  padding: 8px;
+}
+.chat-msg {
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+}
+.chat-msg.user {
+  background: #e6f7ff;
+}
+.chat-msg.llm {
+  background: #fffbe6;
+}
