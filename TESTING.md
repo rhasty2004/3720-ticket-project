@@ -26,6 +26,10 @@ cd backend/client-service
 npm install
 npm test
 
+# frontend
+cd /Users/tommyhasty/3720-ticket-project/frontend
+npm test -- --watchAll=false
+
 
 3) Manual Testing
 A. Booking via natural language (text)
@@ -59,6 +63,19 @@ client service testing:
     ✓ getAllEvents returns rows (2 ms)
     ✕ purchaseTicket returns updated row on success (5002 ms)
 
+admin servic testing:
+ --runInBand
+ PASS  tests/admin.test.js
+  admin-service
+    ✓ adminModel.createEvent inserts and returns created row (2 ms)
+    ✓ adminController.createEvent responds with created id (1 ms)
+
+frontend testing:
+Test Suites: 3 passed, 3 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        1.527 s
+Ran all test suites.
 
 
 
