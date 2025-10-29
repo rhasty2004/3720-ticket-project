@@ -47,7 +47,7 @@ D. Concurrency test (manual)
 4) Test reporting
 -----------------
 llm-testing:
- PASS  __tests__/llmController.test.js
+ PASS tests/llmController.test.js
   llmController simpleParse fallback
     ✓ parses book intent with tickets and event (2 ms)
     ✓ parses list intent

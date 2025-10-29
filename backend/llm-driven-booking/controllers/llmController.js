@@ -1,6 +1,10 @@
 const model = require('../models/llmModel');
 
-// Very small parser fallback. Returns { event, tickets, intent }
+/*
+  Very small parser fallback. 
+  text: input text to parse
+  Returns { event, tickets, intent }
+*/
 function simpleParse(text) {
   if (!text || typeof text !== 'string') return null;
   const lower = text.toLowerCase();
@@ -19,6 +23,11 @@ function simpleParse(text) {
   return null;
 }
 
+/*
+  Calls the LLM (uses openAI) to parse the input text
+  text: input text to parse
+  returns parsed object { event, tickets, intent }
+*/
 async function callLLM(text) {
   const key = process.env.OPENAI_API_KEY;
   if (!key) throw new Error('No OPENAI_API_KEY');
@@ -92,7 +101,12 @@ async function parse(req, res) {
   return res.json(parsed);
 }
 
-// Confirm booking: expects { event, tickets }
+/* 
+  Confirm booking: expects { event, tickets
+  req: request object with body containing event and tickets or reservationId
+  res: response object to send result
+  returns JSON response with booking confirmation or error
+*/
 async function confirm(req, res) {
   // Support two modes:
   // 1) Direct confirm with { event, tickets }

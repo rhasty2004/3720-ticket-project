@@ -1,6 +1,10 @@
 const dbModule = require('../setup');
 
-// Find event by case-insensitive name
+/*
+  Find event by case insensitive name
+  name: event name to search
+  returns a promise that resolves with the event row or null if not found
+*/
 function findEventByName(name) {
   return new Promise((resolve, reject) => {
     const db = dbModule.openDb();
@@ -12,7 +16,11 @@ function findEventByName(name) {
   });
 }
 
-// Book tickets atomically with transaction and simple retry
+/*
+  Book an event: transactional decrement and create booking record
+  { event, tickets }: event name and number of tickets being booked
+  Returns a promise that resolves with updated booking data or null if not enough tickets or event not found
+*/
 function bookEvent({ event, tickets }) {
   const maxAttempts = 5;
   const baseDelay = 50;
@@ -75,7 +83,11 @@ function bookEvent({ event, tickets }) {
   });
 }
 
-// Create a reservation record (no decrement). Returns reservation or null if not enough tickets or event not found.
+/*
+  creates a reservation. 
+  event, tickets - the event name and number of tickets to reserve
+  returns the reservation record or null if not enough tickets or event not found
+*/
 async function createReservation({ event, tickets }) {
   const ev = await findEventByName(event);
   if (!ev) return null;
@@ -92,7 +104,11 @@ async function createReservation({ event, tickets }) {
   });
 }
 
-// Confirm a reservation: perform transactional decrement and create booking, delete reservation
+/*
+  Confirm a reservation: perform transactional decrement and create booking, delete reservation
+  reservationId: ID of the reservation
+  Returns a promise that resolves with the booking data or null if not enough tickets or reservation not found
+*/
 function confirmReservation({ reservationId }) {
   const maxAttempts = 5;
   const baseDelay = 50;
