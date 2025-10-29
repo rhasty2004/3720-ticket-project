@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "sqlite3": "^5.1.7"
   }
+    ,
+    "devDependencies": {
+      "jest": "^29.0.0"
+    }
 }

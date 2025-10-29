@@ -8,7 +8,7 @@ function simpleParse(text) {
     // find number
     const numMatch = lower.match(/(\d+)\s*(tickets?|seats?)/);
     const tickets = numMatch ? parseInt(numMatch[1], 10) : 1;
-    // find event name heuristically (text after for)
+    // find event name heuristically
     let event = null;
     const forMatch = text.match(/for\s+(.+)$/i);
     if (forMatch) event = forMatch[1].trim().replace(/[.?!]$/, '');
@@ -128,4 +128,4 @@ async function reserve(req, res) {
   }
 }
 
-module.exports = { parse, reserve, confirm };
+module.exports = { parse, reserve, confirm, _simpleParse: simpleParse };
