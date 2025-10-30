@@ -97,7 +97,7 @@ async function parse(req, res) {
   }
 
   const parsed = simpleParse(text);
-  if (!parsed) return res.status(400).json({ error: 'Could not parse input. Try: "Book 2 tickets for Jazz Night"' });
+  if (!parsed) return res.status(400).json({ error: 'Could not parse input. Try: "Book 2 tickets for Concert A"' });
   return res.json(parsed);
 }
 
