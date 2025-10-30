@@ -17,7 +17,8 @@ function simpleParse(text) {
     const forMatch = text.match(/for\s+(.+)$/i);
     if (forMatch) event = forMatch[1].trim().replace(/[.?!]$/, '');
     return { event, tickets, intent: 'book' };
-  }
+  } 
+  
   // other commands
   if (lower.includes('list') || lower.includes('show')) return { intent: 'list' };
   return null;

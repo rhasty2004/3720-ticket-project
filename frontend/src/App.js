@@ -131,7 +131,7 @@ function App() {
 			speakText(llmMsg.text);
 		} catch (err) {
 			console.error('LLM call failed', err);
-			setMessage('Failed to contact LLM service');
+			setMessage('No valid input. Try saying "list" or "book".');
 		}
 	}
 
