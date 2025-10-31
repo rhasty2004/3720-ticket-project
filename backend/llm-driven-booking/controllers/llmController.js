@@ -129,6 +129,12 @@ async function confirm(req, res) {
   }
 }
 
+/*
+  Reserve booking: expects { event, tickets }
+  req: request object with body containing event and tickets
+  res: response object to send result
+  returns JSON response with reservation details or error
+*/
 async function reserve(req, res) {
   const { event, tickets } = req.body || {};
   if (!event || !tickets) return res.status(400).json({ error: 'Missing event or tickets' });
