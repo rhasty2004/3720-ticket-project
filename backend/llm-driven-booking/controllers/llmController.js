@@ -98,7 +98,7 @@ async function parse(req, res) {
   }
 
   const parsed = simpleParse(text);
-  if (!parsed) return res.status(400).json({ error: 'Could not parse input. Try: "Book 2 tickets for Jazz Night"' });
+  if (!parsed) return res.status(400).json({ error: 'Could not parse input. Try: "Book 2 tickets for Concert A"' });
   return res.json(parsed);
 }
 
@@ -130,6 +130,12 @@ async function confirm(req, res) {
   }
 }
 
+/*
+  Reserve booking: expects { event, tickets }
+  req: request object with body containing event and tickets
+  res: response object to send result
+  returns JSON response with reservation details or error
+*/
 async function reserve(req, res) {
   const { event, tickets } = req.body || {};
   if (!event || !tickets) return res.status(400).json({ error: 'Missing event or tickets' });

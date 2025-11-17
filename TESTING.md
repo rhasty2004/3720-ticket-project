@@ -34,8 +34,14 @@ npm test -- --watchAll=false
 3) Manual Testing
 A. Booking via natural language (text)
 - Start services and run:
-  curl -X POST http://localhost:7001/api/llm/parse -H 'Content-Type: application/json' -d '{"text":"Book 2 tickets for Concert A"}'
-  Expect: JSON with intent "book" and tickets=2.
+curl -X POST http://localhost:7001/api/llm/reserve \
+  -H "Content-Type: application/json" \
+  -d '{"event":"Concert A","tickets":5}'
+  
+  confirm:
+curl -X POST http://localhost:7001/api/llm/confirm \
+  -H "Content-Type: application/json" \
+  -d '{"reservationId":3}'
 
 B. Booking via voice (manual)
 - Open frontend in Chrome, click the microphone button, speak: "Show me concerts" or "Book 1 ticket for Concert A".
