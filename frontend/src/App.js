@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, createContext, useContext } from 'react';
+import React, { useEffect, useState, useRef, createContext, useContext, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
@@ -334,7 +334,7 @@ function EventsPage() {
     }
   }
 
-  async function sendToLLM(text) {
+  const sendToLLM = useCallback(async (text) => {
     try {
       const res = await fetch((process.env.REACT_APP_LLM_URL || 'http://localhost:7001') + '/api/llm/parse', {
         method: 'POST',
@@ -354,9 +354,9 @@ function EventsPage() {
       console.error('LLM call failed', err);
       setMessage('No valid input. Try saying "list" or "book".');
     }
-  }
+  }, [setChat, setMessage]);
 
-  function speakText(text) {
+  const speakText = useCallback((text) => {
     try {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
@@ -369,7 +369,7 @@ function EventsPage() {
     } catch (e) {
       console.error('speakText failed', e);
     }
-  }
+  }, []);
 
   async function buyTicket(id) {
     setMessage(null);
