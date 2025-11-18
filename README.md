@@ -46,3 +46,14 @@ cd /Users/tommyhasty/3720-ticket-project/frontend
 REACT_APP_CLIENT_URL=http://localhost:6001 REACT_APP_LLM_URL=http://localhost:7001 npm start
 
 to voice into microphone: BOOK 1 ticket for concert A or SHOW me concerts
+
+# SPRINT 3
+
+Before Running Front End:
+Open a new terminal, cd into auth-service and run
+  node server.js
+
+Testing Login:
+  Email: test123@gmail.com
+  Password: HerbertDaGoat
+
