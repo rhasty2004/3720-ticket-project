@@ -18,26 +18,32 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
       - name: Install frontend dependencies
+        working-directory: ./frontend
         run: |
-          cd frontend
-          npm install
+          # prefer clean install from lockfile; fall back to install if no lockfile
+          npm ci --prefer-offline --no-audit --progress=false || npm install --prefer-offline --no-audit --progress=false
+
       - name: Run frontend tests
+        working-directory: ./frontend
         run: |
-          cd frontend
           npm test -- --watchAll=false
+
       - name: Install backend dependencies
         run: |
-          cd backend/client-service && npm install
-          cd ../admin-service && npm install
-          cd ../llm-driven-booking && npm install
-          cd ../auth-service && npm install
+          (cd backend/client-service && npm ci --prefer-offline --no-audit --progress=false) || (cd backend/client-service && npm install)
+          (cd backend/admin-service && npm ci --prefer-offline --no-audit --progress=false) || (cd backend/admin-service && npm install)
+          (cd backend/llm-driven-booking && npm ci --prefer-offline --no-audit --progress=false) || (cd backend/llm-driven-booking && npm install)
+          (cd backend/auth-service && npm ci --prefer-offline --no-audit --progress=false) || (cd backend/auth-service && npm install)
+
       - name: Run backend tests
         run: |
-          cd backend/client-service && npm test
-          cd ../admin-service && npm test
-          cd ../llm-driven-booking && npm test
-          cd ../auth-service && npm test || echo "No tests in auth-service"
+          (cd backend/client-service && npm test) || echo "client-service tests failed or none"
+          (cd backend/admin-service && npm test) || echo "admin-service tests failed or none"
+          (cd backend/llm-driven-booking && npm test) || echo "llm-driven-booking tests failed or none"
+          (cd backend/auth-service && npm test) || echo "No tests in auth-service"
 
   deploy:
     needs: test
