@@ -58,7 +58,7 @@ jobs:
         run: |
           npm install -g vercel
           cd frontend
-          vercel --prod --token $VERCEL_TOKEN
+          vercel --prod --yes --token $VERCEL_TOKEN
       - name: Deploy backend to Render
         env:
           RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
