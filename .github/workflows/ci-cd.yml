@@ -19,12 +19,18 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install frontend dependencies
+        working-directory: frontend
         run: |
-          cd frontend
-          npm install
+          npm ci --prefer-offline --no-audit --progress=false || npm install --prefer-offline --no-audit --progress=false
+
+      - name: Verify react-router-dom install
+        working-directory: frontend
+        run: |
+          ls node_modules/react-router-dom || (echo "react-router-dom not installed" && exit 1)
+
       - name: Run frontend tests
+        working-directory: frontend
         run: |
-          cd frontend
           npm test -- --watchAll=false
       - name: Install backend dependencies
         run: |
