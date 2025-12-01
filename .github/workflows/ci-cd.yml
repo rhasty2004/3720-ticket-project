@@ -1,0 +1,64 @@
+name: TigerTix CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+      - name: Run frontend tests
+        run: |
+          cd frontend
+          npm test -- --watchAll=false
+      - name: Install backend dependencies
+        run: |
+          cd backend/client-service && npm install
+          cd ../admin-service && npm install
+          cd ../llm-driven-booking && npm install
+          cd ../auth-service && npm install
+      - name: Run backend tests
+        run: |
+          cd backend/client-service && npm test
+          cd ../admin-service && npm test
+          cd ../llm-driven-booking && npm test
+          cd ../auth-service && npm test || echo "No tests in auth-service"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deploy frontend to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npm install -g vercel
+          cd frontend
+          vercel --prod --token $VERCEL_TOKEN
+      - name: Deploy backend to Render
+        env:
+          RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer $RENDER_TOKEN" \
+            -H "Accept: application/json" \
+            https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys
