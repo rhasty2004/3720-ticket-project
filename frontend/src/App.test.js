@@ -3,6 +3,7 @@ import App from './App';
 
 test('renders TigerTix header', () => {
   render(<App />);
-  const header = screen.getByText(/TigerTix/i);
+  // target the page heading specifically
+  const header = screen.getByRole('heading', { name: /TigerTix/i });
   expect(header).toBeInTheDocument();
 });

@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import App from '../App';
+import { EventsPage } from '../App';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // Mock SpeechRecognition
 class MockRecognition extends EventTarget {
@@ -36,8 +37,12 @@ beforeAll(() => {
 });
 
 test('renders microphone button and chat and processes a mock recognition result', async () => {
-  render(<App />);
-  const mic = screen.getByRole('button', { name: /start voice input/i });
+  render(
+    <Router>
+      <EventsPage />
+    </Router>
+  );
+  const mic = screen.getByRole('button', { name: /start voice input|Start voice input/i });
   expect(mic).toBeInTheDocument();
 
   fireEvent.click(mic);

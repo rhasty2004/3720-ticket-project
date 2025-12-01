@@ -38,4 +38,10 @@
       "last 1 safari version"
     ]
   }
+  ,
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "<rootDir>/src/__mocks__/axios.js"
+    }
+  }
 }

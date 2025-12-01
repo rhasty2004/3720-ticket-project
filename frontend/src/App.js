@@ -498,4 +498,5 @@ function App() {
   );
 }
 
+export { EventsPage };
 export default App;
