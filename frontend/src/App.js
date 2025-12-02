@@ -12,7 +12,11 @@ const useAuth = () => useContext(AuthContext);
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = process.env.REACT_APP_AUTH_URL || 'http://localhost:3001/api/auth';
+  // Ensure API_URL ends with /api/auth
+  let API_URL = process.env.REACT_APP_AUTH_URL || 'http://localhost:3001/api/auth';
+  if (!API_URL.endsWith('/api/auth')) {
+    API_URL = API_URL.replace(/\/?$/, '/api/auth');
+  }
 
   axios.defaults.withCredentials = true;
 
