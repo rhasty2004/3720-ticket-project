@@ -12,7 +12,7 @@ const useAuth = () => useContext(AuthContext);
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const API_URL = 'http://localhost:3001/api/auth';
+  const API_URL = process.env.REACT_APP_AUTH_URL || 'http://localhost:3001/api/auth';
 
   axios.defaults.withCredentials = true;
 

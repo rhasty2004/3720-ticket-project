@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API_URL = 'http://localhost:3001/api/auth';
+  const API_URL = process.env.REACT_APP_AUTH_URL || 'http://localhost:3001/api/auth';
 
   // Configure axios to send cookies
   axios.defaults.withCredentials = true;
