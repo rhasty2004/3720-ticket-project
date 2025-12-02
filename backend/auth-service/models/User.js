@@ -1,4 +1,6 @@
-const db = require('../../shared-db/database');
+const sqlite3 = require('sqlite3').verbose();
+const { initDb } = require('../../shared-db/database');
+const db = initDb(sqlite3);
 
 class User {
   static async create(email, password, role = 'client') {
