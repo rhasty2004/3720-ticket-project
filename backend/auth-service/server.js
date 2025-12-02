@@ -19,6 +19,11 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', authRoutes);
 
+// auth-service/server.js
+const sqlite3 = require('sqlite3');
+const { initDb } = require('../shared-db/database');
+const db = initDb(sqlite3);
+
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Auth service is running' });
 });
