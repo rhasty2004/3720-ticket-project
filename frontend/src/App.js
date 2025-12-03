@@ -273,13 +273,17 @@ function EventsPage() {
     r.interimResults = false;
     r.maxAlternatives = 1;
     r.onresult = (evt) => {
-      const text = (evt.results[0] && evt.results[0][0] && evt.results[0][0].transcript) || '';
-      if (text) {
-        const userMsg = { from: 'user', text };
-        setChat(c => [...c, userMsg]);
-        sendToLLM(text);
+      // Only process when isFinal is true
+      const result = evt.results[0][0];
+      if (evt.results[0].isFinal) {
+        const text = result.transcript;
+        if (text) {
+          const userMsg = { from: 'user', text };
+          setChat(c => [...c, userMsg]);
+          sendToLLM(text);
+        }
+        setRecording(false);
       }
-      setRecording(false);
     };
     r.onerror = (e) => {
       console.error('Speech recognition error', e);
