@@ -273,9 +273,10 @@ function EventsPage() {
     r.interimResults = false;
     r.maxAlternatives = 1;
     r.onresult = (evt) => {
-      // Only process when isFinal is true
+      // Some test mocks omit isFinal; treat undefined as final
       const result = evt.results[0][0];
-      if (evt.results[0].isFinal) {
+      const isFinal = typeof evt.results[0].isFinal === 'undefined' ? true : evt.results[0].isFinal;
+      if (isFinal) {
         const text = result.transcript;
         if (text) {
           const userMsg = { from: 'user', text };
