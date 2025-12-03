@@ -1,5 +1,122 @@
 # 3720-ticket-project
 
+# PROJECT OVERVIEW
+This project implements a multi-service event booking platform featuring:
+
+- A React frontend
+
+- Admin, Client, and LLM-driven booking microservices
+
+- User authentication with JWT
+
+- Voice-enabled interaction
+
+- Full regression test suite (unit, integration, end-to-end)
+
+Users can browse events, purchase tickets, interact using natural language, and use voice commands. Admins can create and modify events through a secure admin panel.
+
+# TECH STACK
+Frontend:
+
+- React
+
+- React Router
+
+- SpeechRecognition API (voice input)
+
+Backend:
+
+- Node.js
+
+- Express.js
+
+Database:
+
+- SQLite (local development)
+
+Authentication:
+
+- JWT (jsonwebtoken)
+
+- bcryptjs (password hashing)
+
+LLM:
+
+- OpenAI-compatible API for natural-language booking
+
+Testing:
+
+- React Testing Library
+
+# ARCHITECTURE SUMMARY
+Microservices
+
+Admin Service (Port 7002)
+
+- Create/update events
+
+- Protected by JWT middleware
+
+Client Service (Port 7003)
+
+- View events
+
+- Purchase tickets
+
+- Concurrency-safe ticket operations
+
+LLM Service (Port 7001)
+
+- Parses natural language
+
+- Generates booking intentions
+
+- Confirms purchases
+
+User Authentication Service (Port 7000)
+
+- Register/Login
+
+- Hashes passwords
+
+- Issues and validates JWT tokens
+
+React Frontend (Port 3000)
+
+- Displays events, booking UI, login, voice interface
+
+Data Flow (Summary)
+
+- User logs in → Auth service returns JWT
+
+- User selects event → Client service fetches data
+
+- Admin creates event → Admin service writes to DB
+
+- LLM parses booking requests → Client confirms final purchase
+
+- React handles UI + protected routes using stored token
+
+# INSTALLATION & SETUP INTRUCTIONS
+
+# ENVIRONMENT VARIABLES SETUP
+
+# HOW TO RUN REGRESSION TESTS
+
+# TEAM MEMBERS, INSTRUCTORS, TAS, ROLES
+Cam Allen - Developer
+Ian Lewis - Developer
+Thomas Hasty - Scrum Master
+
+Instructor: Dr. Julian Brinkley
+
+TAs: Colt Doster, Atik Enam
+
+# LICENSE
+This project is licensed under the MIT license.
+For details, read more here: https://choosealicense.com/licenses/mit/
+
+# SPRINT OVERVIEWS
 # SPRINT 1
 running admin service
 cd backend/admin-service
@@ -57,43 +174,6 @@ Testing Login:
   Email: test123@gmail.com
   Password: HerbertDaGoat
 
-○ License (MIT or similar) – Learn what is best for your project!
-(https://choosealicense.com/licenses/)
+# SPRINT 4
 
-# PROJECT OVERVIEW
-This project implements a multi-service event booking platform featuring:
-
-- A React frontend
-
-- Admin, Client, and LLM-driven booking microservices
-
-- User authentication with JWT
-
-- Voice-enabled interaction
-
-- Full regression test suite (unit, integration, end-to-end)
-
-Users can browse events, purchase tickets, interact using natural language, and use voice commands. Admins can create and modify events through a secure admin panel.
-
-# TECH STACK
-react, node.js, express, sqlite/supabase, llm api
-# ARCHITECTURE SUMMARY
-microservices/data flow
-# INSTALLATION & SETUP INTRUCTIONS
-
-# ENVIRONMENT VARIABLES SETUP
-
-# HOW TO RUN REGRESSION TESTS
-
-# TEAM MEMBERS, INSTRUCTORS, TAS, ROLES
-Cam Allen - Developer
-Ian Lewis - Developer
-Thomas Hasty - Scrum Master
-
-Instructor: Dr. Julian Brinkley
-
-TAs: Colt Doster, Atik Enam
-
-# LICENSE
-This project is licensed under the MIT license.
-For details, read more here: https://choosealicense.com/licenses/mit/
+Deployment, final touch ups, and documentation.
