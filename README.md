@@ -61,6 +61,20 @@ Testing Login:
 (https://choosealicense.com/licenses/)
 
 # PROJECT OVERVIEW
+This project implements a multi-service event booking platform featuring:
+
+- A React frontend
+
+- Admin, Client, and LLM-driven booking microservices
+
+- User authentication with JWT
+
+- Voice-enabled interaction
+
+- Full regression test suite (unit, integration, end-to-end)
+
+Users can browse events, purchase tickets, interact using natural language, and use voice commands. Admins can create and modify events through a secure admin panel.
+
 # TECH STACK
 react, node.js, express, sqlite/supabase, llm api
 # ARCHITECTURE SUMMARY
@@ -71,6 +85,15 @@ microservices/data flow
 
 # HOW TO RUN REGRESSION TESTS
 
-# TEAM MEMBERS, INSTRUCTURES, TAS, ROLES
+# TEAM MEMBERS, INSTRUCTORS, TAS, ROLES
+Cam Allen - Developer
+Ian Lewis - Developer
+Thomas Hasty - Scrum Master
+
+Instructor: Dr. Julian Brinkley
+
+TAs: Colt Doster, Atik Enam
 
 # LICENSE
+This project is licensed under the MIT license.
+For details, read more here: https://choosealicense.com/licenses/mit/
