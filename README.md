@@ -97,16 +97,39 @@ Data Flow (Summary)
 
 - React handles UI + protected routes using stored token
 
-# INSTALLATION & SETUP INTRUCTIONS
+# INSTALLATION & SETUP INSTRUCTIONS
+
+1. Clone the repo and install dependencies:
+
+  npm install  (for each microservice and frontend folder)
+
+2. Ensure SQLite is available (local dev uses database.sqlite).
+3. Start each microservice and frontend as described in SPRINT sections below.
 
 # ENVIRONMENT VARIABLES SETUP
 
+- Set ports and DB paths in each microservice's `.env` or via shell:
+  - `PORT`, `DB_PATH`, `JWT_SECRET`, etc.
+- Frontend:
+  - `REACT_APP_CLIENT_URL`, `REACT_APP_LLM_URL`, `REACT_APP_AUTH_URL`
+- See README SPRINT sections for example values.
+
 # HOW TO RUN REGRESSION TESTS
+
+1. Frontend:
+  cd frontend
+  npm test
+
+2. Backend:
+  cd backend/[service]
+  npm test
+
+3. Review output for passing/failing tests.
 
 # TEAM MEMBERS, INSTRUCTORS, TAS, ROLES
 Cam Allen - Developer
 Ian Lewis - Developer
-Thomas Hasty - Scrum Master
+Tommy Hasty - Scrum Master
 
 Instructor: Dr. Julian Brinkley
 
