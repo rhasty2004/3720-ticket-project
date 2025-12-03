@@ -57,3 +57,20 @@ Testing Login:
   Email: test123@gmail.com
   Password: HerbertDaGoat
 
+○ License (MIT or similar) – Learn what is best for your project!
+(https://choosealicense.com/licenses/)
+
+# PROJECT OVERVIEW
+# TECH STACK
+react, node.js, express, sqlite/supabase, llm api
+# ARCHITECTURE SUMMARY
+microservices/data flow
+# INSTALLATION & SETUP INTRUCTIONS
+
+# ENVIRONMENT VARIABLES SETUP
+
+# HOW TO RUN REGRESSION TESTS
+
+# TEAM MEMBERS, INSTRUCTURES, TAS, ROLES
+
+# LICENSE
